@@ -1,8 +1,9 @@
 <template>
-  <form>
+  <form @submit.prevent="handleSubmit">
     <label>Email: </label><input type="email" required v-model="email" />
     <label>Password: </label
     ><input type="password" required v-model="password" />
+    <p class="error">{{ passwordError }}</p>
     <label>Role:</label>
     <select v-model="role">
       <option value="developer">Web developer</option>
@@ -33,6 +34,8 @@
       {{ terms }}
     </p>
     <p>Skills: {{ tempSkill }} => {{ skills }}</p>
+
+    <div class="submit"><button>Create Account</button></div>
   </form>
 </template>
 
@@ -46,6 +49,9 @@ export default {
       terms: false,
       tempSkill: "",
       skills: [],
+
+      // errors
+      passwordError: null,
     };
   },
 
@@ -70,6 +76,24 @@ export default {
     },
     removeSkill(skill) {
       this.skills = this.skills.filter((s) => s !== skill);
+    },
+    handleSubmit() {
+      console.warn("handleSubmit");
+      // validations
+      // pwd
+      this.password.length <= 5
+        ? (this.passwordError =
+            "This password must be more then 5 characters long")
+        : (this.passwordError = null);
+
+      if (this.passwordError) return;
+      console.warn({
+        email: this.email,
+        password: this.password,
+        role: this.role,
+        skills: this.skills,
+        terms: this.terms,
+      });
     },
   },
 };
@@ -125,5 +149,22 @@ input[type="checkbox"] {
 .pill:hover {
   background: red;
   color: white;
+}
+button {
+  background: rgb(109, 109, 251);
+  border: 0;
+  padding: 10px 20px;
+  margin-top: 20px;
+  color: white;
+  border-radius: 2px;
+}
+.submit {
+  text-align: center;
+}
+.error {
+  color: red;
+  margin-top: 10px;
+  font-size: 0.8em;
+  font-weight: bold;
 }
 </style>
