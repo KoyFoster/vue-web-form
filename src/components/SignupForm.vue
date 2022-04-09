@@ -3,34 +3,31 @@
     <label>Email: </label><input type="email" required v-model="email" />
     <label>Password: </label
     ><input type="password" required v-model="password" />
-    <p>
-      Email: {{ email }} - Password: {{ password }} - Role: {{ role }} - Terms:
-      {{ terms }}
-    </p>
     <label>Role:</label>
     <select v-model="role">
       <option value="developer">Web developer</option>
       <option value="designer">Web designer</option>
       <option value="none">No role</option>
     </select>
+
+    <label>Skills</label>
+    <input type="text" v-model="tempSkill" @keyup="addSkill" />
+    <div class="pill" v-for="skill in skills" :key="skill" @click="removeSkill">
+      {{ skill }}
+    </div>
+
     <div class="terms">
       <input type="checkbox" required v-model="terms" />
       <label>Accept terms and conditions</label>
     </div>
-
-    <!-- Data array example -->
-    <!-- <div>
-      <input type="checkbox" v-model="names" value="Mario" />
-      <label>Mario</label>
-    </div>
-    <div>
-      <input type="checkbox" v-model="names" value="Yoshi" />
-      <label>Yoshi</label>
-    </div>
-    <div>
-      <input type="checkbox" v-model="names" value="Shaun" />
-      <label>Shaun</label>
-    </div> -->
+    <p>Email: {{ email }}</p>
+    <p>Password: {{ password }}</p>
+    <p>Role: {{ role }}</p>
+    <p>
+      Terms:
+      {{ terms }}
+    </p>
+    <p>Skills: {{ tempSkill }} => {{ skills }}</p>
   </form>
 </template>
 
@@ -42,15 +39,33 @@ export default {
       password: "",
       role: "none",
       terms: false,
-      // data array example
-      // names: [],
+      tempSkill: "",
+      skills: [],
     };
   },
 
   methods: {
-    onChange() {
-      console.log("email: ", this.email);
-      console.log("password: ", this.password);
+    addSkill(e) {
+      if (e.key !== "," || !this.tempSkill) return;
+      // parse out in case user copy pastes
+      const skills = e.target.value.split(",").filter((skill) => skill !== "");
+      if (skills.length === 0) {
+        this.tempSkill = "";
+        return;
+      }
+
+      this.skills.push(...skills);
+      // filter duplicates
+      this.skills = Array.from(new Set(this.skills));
+
+      this.tempSkill = "";
+    },
+    removeSkill(e) {
+      console.log("removeSkill:", e, e.target.innerHTML);
+      console.dir(e.target);
+      this.skills = this.skills.filter(
+        (skill) => skill !== e.target.innerHTML
+      );
     },
   },
 };
