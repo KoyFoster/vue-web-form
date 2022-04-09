@@ -12,7 +12,12 @@
 
     <label>Skills</label>
     <input type="text" v-model="tempSkill" @keyup="addSkill" />
-    <div class="pill" v-for="skill in skills" :key="skill" @click="removeSkill">
+    <div
+      class="pill"
+      v-for="skill in skills"
+      :key="skill"
+      @click="removeSkill(skill)"
+    >
       {{ skill }}
     </div>
 
@@ -47,10 +52,12 @@ export default {
   methods: {
     addSkill(e) {
       if (e.key !== "," || !this.tempSkill) return;
+      console.time("addSkill-Timer");
       // parse out in case user copy pastes
       const skills = e.target.value.split(",").filter((skill) => skill !== "");
       if (skills.length === 0) {
         this.tempSkill = "";
+        console.timeEnd("addSkill");
         return;
       }
 
@@ -59,13 +66,10 @@ export default {
       this.skills = Array.from(new Set(this.skills));
 
       this.tempSkill = "";
+      console.timeEnd("addSkill-Timer");
     },
-    removeSkill(e) {
-      console.log("removeSkill:", e, e.target.innerHTML);
-      console.dir(e.target);
-      this.skills = this.skills.filter(
-        (skill) => skill !== e.target.innerHTML
-      );
+    removeSkill(skill) {
+      this.skills = this.skills.filter((s) => s !== skill);
     },
   },
 };
@@ -105,5 +109,21 @@ input[type="checkbox"] {
   margin: 0 10px 0 0;
   position: relative;
   top: 2px;
+}
+.pill {
+  display: inline-block;
+  margin: 20px 10px 0 0;
+  padding: 6px 12px;
+  background: #eee;
+  border-radius: 20px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: #777;
+  cursor: pointer;
+}
+.pill:hover {
+  background: red;
+  color: white;
 }
 </style>
