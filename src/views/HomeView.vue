@@ -8,13 +8,27 @@
 </template>
 
 <script>
-import { computed, ref } from "@vue/runtime-core";
+import { computed, ref, watchEffect } from "@vue/runtime-core";
 export default {
   name: "HomeView",
   // setup runs before everything else
   setup() {
     const names = ref(["mario", "luigi", "peach", "toad"]);
     const search = ref("");
+
+    // watch
+    // watch(search, () => {
+    //   console.log("Search change:", search.value);
+    // });
+
+    // like useffect, will run initially. Unlike watch, which does not.
+    // this automatically watches any variable in the function call
+    const stopEffect = watchEffect(() => {
+      console.log("Search change:", search.value);
+    });
+
+    // run returned function in order to stop
+    stopEffect();
 
     const matchingNames = computed(() => {
       return names.value.filter((name) => name.includes(search.value));
