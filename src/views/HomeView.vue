@@ -1,50 +1,34 @@
 <template>
-  <h1>This is the Home page</h1>
-  <p ref="para">Setup Name: {{ name }} Setup Age: {{ age }}</p>
-  <button @click="handleClick">Click me</button>
-  <button @click="age++">Grow up</button>
-  <input type="text" v-model="name" />
+  <div class="home">
+    <h1>Home</h1>
+    <h2>Refs</h2>
+    <p>{{ ninjaOne.name }} - {{ ninjaOne.age }}</p>
+    <button @click="updateNinjaOne">Update ninja one</button>
+    <h2>Reactive</h2>
+    <p>{{ ninjaTwo.name }} - {{ ninjaTwo.age }}</p>
+    <button @click="updateNinjaTwo">Update ninja one</button>
+  </div>
 </template>
 
 <script>
-import { ref } from "@vue/reactivity";
+import { ref, reactive } from "@vue/reactivity";
 export default {
   name: "HomeView",
   // setup runs before everything else
   setup() {
-    console.log("setup");
+    const ninjaOne = ref({ name: "mario", age: 40 });
+    const ninjaTwo = reactive({ name: "luigi", age: 35 });
 
-    const para = ref(null);
-
-    const name = ref("mario");
-    const age = ref(30);
-
-    const handleClick = () => {
-      console.log("you clicked me:", para, para.value);
-      para.value.classList.add("test");
-      para.value.textContent = "[ERROR]";
-      name.value = "ppop";
+    const updateNinjaOne = () => {
+      ninjaOne.value.age = 45;
+    };
+    const updateNinjaTwo = () => {
+      ninjaTwo.age = 40;
     };
 
-    // return data to template
-    // non-reactive data
-    return {
-      name: name,
-      age: age,
-      handleClick,
-      para,
-    };
-  },
-
-  // reactive data
-  data() {
-    return {};
+    return { ninjaOne, updateNinjaOne, ninjaTwo, updateNinjaTwo };
   },
 };
 </script>
 
-<style>
-.test {
-  color: red;
-}
-</style>
+<style></style>
