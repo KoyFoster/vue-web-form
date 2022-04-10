@@ -24,13 +24,13 @@ const routes = [
   },
   {
     path: "/Jobs/:id",
-    name: "Job Details",
+    name: "JobDetails",
     component: JobsViewDetails,
     props: true,
   },
   {
     path: "/SignUp",
-    name: "Sign Up",
+    name: "SignUp",
     component: SignupView,
   },
   // redirects
