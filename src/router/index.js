@@ -32,6 +32,11 @@ const routes = [
     name: "SignUp",
     component: SignupView,
   },
+  // redirects
+  {
+    path: "/all-jobs",
+    redirect: "/jobs",
+  },
 ];
 
 const router = createRouter({
