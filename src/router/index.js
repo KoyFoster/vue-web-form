@@ -23,8 +23,9 @@ const routes = [
   },
   {
     path: "/Jobs/:id",
-    name: "JobsDetails",
+    name: "JobDetails",
     component: JobsViewDetails,
+    props: true,
   },
   {
     path: "/SignUp",
