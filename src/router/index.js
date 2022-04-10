@@ -4,6 +4,7 @@ import AboutView from "../views/AboutView";
 import JobsView from "../views/jobs/JobsView";
 import JobsViewDetails from "../views/jobs/JobsViewDetails";
 import SignupView from "../views/SignupView";
+import NotFoundView from "../views/NotFoundView";
 
 const routes = [
   {
@@ -23,19 +24,25 @@ const routes = [
   },
   {
     path: "/Jobs/:id",
-    name: "JobDetails",
+    name: "Job Details",
     component: JobsViewDetails,
     props: true,
   },
   {
     path: "/SignUp",
-    name: "SignUp",
+    name: "Sign Up",
     component: SignupView,
   },
   // redirects
   {
     path: "/all-jobs",
     redirect: "/jobs",
+  },
+  // catch all 404 or default
+  {
+    path: "/:catchAll(.*)",
+    name: "Not Found",
+    component: NotFoundView,
   },
 ];
 
