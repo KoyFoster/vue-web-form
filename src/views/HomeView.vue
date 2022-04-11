@@ -13,43 +13,28 @@
 <script>
 import { ref } from "@vue/reactivity";
 import PostList from "../components/PostList.vue";
-import { onMounted } from "@vue/runtime-core";
+import getPosts from "../composables/getPosts";
 export default {
   name: "HomeView",
   components: { PostList },
   // setup runs before everything else
   setup() {
-    const posts = ref([]);
-    const error = ref(null);
-    const isRequesting = ref(false);
-
-    // load posts function
-    const load = async () => {
-      isRequesting.value = true;
-      try {
-        let resp = await fetch("http://localhost:3000/posts");
-        if (!resp.ok) {
-          throw Error("no data available");
-        } else {
-          posts.value = await resp.json();
-          isRequesting.value = false;
-        }
-      } catch (err) {
-        isRequesting.value = false;
-        error.value = err.message;
-        console.error("Posts Request Error:", error.value);
-      }
-    };
-
-    onMounted(() => {
-      load();
-    });
+    //
+    const { posts, error, isRequesting, load } = getPosts();
+    load();
 
     const showPosts = ref(true);
     const togglePosts = () => {
       showPosts.value = !showPosts.value;
     };
-    return { posts, showPosts, togglePosts, error, isRequesting };
+
+    return {
+      posts,
+      showPosts,
+      togglePosts,
+      error,
+      isRequesting,
+    };
   },
 };
 </script>
