@@ -15,5 +15,19 @@
       "id": 3,
       "details": "lorem"
     }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "welcome to the blog",
+      "body": "lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum",
+      "tags": ["webdev", "coding", "news"]
+    },
+    {
+      "id": 2,
+      "title": "top 5 css tips",
+      "body": "lorem ipsum",
+      "tags": ["css", "webdev", "coding"]
+    }
   ]
 }
