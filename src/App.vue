@@ -36,7 +36,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #ccc;
 }
 
 #nav {
@@ -63,5 +63,8 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+body {
+  background: #444;
 }
 </style>
