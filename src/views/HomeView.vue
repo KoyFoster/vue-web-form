@@ -1,40 +1,23 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-    Search:<input type="text" v-model="search" />
-    <p>Search term = {{ search }}</p>
-    <div v-for="name in matchingNames" :key="name">{{ name }}</div>
+    <PostList :posts="posts" />
   </div>
 </template>
 
 <script>
-import { computed, ref, watchEffect } from "@vue/runtime-core";
+import { ref } from "@vue/reactivity";
+import PostList from "../components/PostList.vue";
 export default {
   name: "HomeView",
+  components: { PostList },
   // setup runs before everything else
   setup() {
-    const names = ref(["mario", "luigi", "peach", "toad"]);
-    const search = ref("");
-
-    // watch
-    // watch(search, () => {
-    //   console.log("Search change:", search.value);
-    // });
-
-    // like useffect, will run initially. Unlike watch, which does not.
-    // this automatically watches any variable in the function call
-    const stopEffect = watchEffect(() => {
-      console.log("Search change:", search.value);
-    });
-
-    // run returned function in order to stop
-    stopEffect();
-
-    const matchingNames = computed(() => {
-      return names.value.filter((name) => name.includes(search.value));
-    });
-
-    return { names, search, matchingNames };
+    const posts = ref([
+      { title: "welcome to the blog", body: "lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum, lorem ipsum", id: 1 },
+      { title: "top 5 css tips", body: "lorem ipsum", id: 2 },
+    ]);
+    return { posts };
   },
 };
 </script>
